@@ -38,6 +38,10 @@ docker-compose run --rm app sh -c "python manage.py wait_for_db && flake8"
 
 docker-compose run --rm app sh -c "python manage.py makemigrations"
 
+# Show migrations
+
+docker-compose run --rm app sh -c "python manage.py sqlmigrate news 0001"
+
 # Run migrations
 
 docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py migrate"
