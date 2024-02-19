@@ -5,56 +5,45 @@
 {% endblock title %}
 
 {% block sidebar %}
-<div class="col-md-3">
-  <div class="list-group">
-    {% for item in categories %}
-      <a href="{% url 'category' item.pk %}" class="list-group-item list-group-item-action" aria-current="true">
-        {{ item.title }}
-      </a>
-    {% endfor %}
-  </div>
-</div>
+{% include "inc/_sidebar.html" %}
 {% endblock sidebar %}
 {% block content %}
-
-<div class="col-md-9">
-  {% for item in news %}
-      <div class="card mb-3">
-          <div class="card-header">
-              {% comment %} {{ item.my_func }} {% endcomment %}
-              Category: {{ item.category.title }}
-          </div>
-          <div class="card-body">
-            <div class="media">
-              {% if item.photo %}
+{% for item in news %}
+    <div class="card mb-3">
+        <div class="card-header">
+            {% comment %} {{ item.my_func }} {% endcomment %}
+            Category: {{ item.category.title }}
+        </div>
+        <div class="card-body">
+          <div class="media">
+            {% if item.photo %}
+              <img 
+                src="{{ item.photo.url }}" 
+                width="350" 
+                alt="" 
+                class="mr-3">
+            {% else %}
                 <img 
-                  src="{{ item.photo.url }}" 
-                  width="350" 
-                  alt="" 
+                  src="https://fastly.picsum.photos/id/1060/200/300.jpg?blur=2&hmac=sdvovEmy396WU_ZPkxk9bgIXaSQQ2SRyqWNclGhcIno" 
+                  alt=""
                   class="mr-3">
-              {% else %}
-                 <img 
-                    src="https://fastly.picsum.photos/id/1060/200/300.jpg?blur=2&hmac=sdvovEmy396WU_ZPkxk9bgIXaSQQ2SRyqWNclGhcIno" 
-                    alt=""
-                    class="mr-3">
-              {% endif %}
-              <div class="media-body">
-                <h5 class="card-title {% cycle 'text-danger' 'text-success' %} ">{{ item.title }}</h5>
-                  {% comment %} {% autoescape off %} {% endcomment %}
-                      <p class="card-text">
-                          {{item.content|safe|linebreaks|truncatewords:50}}
-                      </p>
-                  {% comment %} {% endautoescape %} {% endcomment %}
-                  <a href="#" class="btn btn-primary">
-                      Read more...
-                  </a>
-              </div>
+            {% endif %}
+            <div class="media-body">
+              <h5 class="card-title {% cycle 'text-danger' 'text-success' %} ">{{ item.title }}</h5>
+                {% comment %} {% autoescape off %} {% endcomment %}
+                    <p class="card-text">
+                        {{item.content|safe|linebreaks|truncatewords:50}}
+                    </p>
+                {% comment %} {% endautoescape %} {% endcomment %}
+                <a href="#" class="btn btn-primary">
+                    Read more...
+                </a>
             </div>
           </div>
-          <div class="card-footer text-muted">
-            {{ item.created_at|date:"Y-m-d H:i:s" }}
-          </div>
-      </div>
-  {% endfor %}
-</div>
+        </div>
+        <div class="card-footer text-muted">
+          {{ item.created_at|date:"Y-m-d H:i:s" }}
+        </div>
+    </div>
+{% endfor %}
 {% endblock content %}
