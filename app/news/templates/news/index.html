@@ -12,7 +12,7 @@
     <div class="card mb-3">
         <div class="card-header">
             {% comment %} {{ item.my_func }} {% endcomment %}
-            Category: <a href="{% url 'category' item.category.pk %}">
+            Category: <a href="{{ item.category.get_absolute_url }}">
                 {{ item.category.title }}
             </a>
         </div>
@@ -37,7 +37,7 @@
                         {{item.content}}
                     </p>
                 {% comment %} {% endautoescape %} {% endcomment %}
-                <a href="#" class="btn btn-primary">
+                <a href="{{ item.get_absolute_url }}" class="btn btn-primary">
                     Read more...
                 </a>
             </div>
