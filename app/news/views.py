@@ -11,7 +11,8 @@ def index(request):
     #     res += f'<div>\n<p>{item.title}</p>\n<p>{item.content}</p>\n</div><hr>\n'
     # # return HttpResponse('Hello world')
     # return HttpResponse(res)
-    news = News.objects.order_by('-created_at')
+    # news = News.objects.order_by('-created_at')
+    news = News.objects.all()
     context = {
         'news':news,
         'title':'News Index'
