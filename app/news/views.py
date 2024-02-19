@@ -21,9 +21,6 @@ def index(request):
     }
     return render(request, template_name='news/index.html', context=context)
 
-def test(request):
-    return HttpResponse('<h1>Test testing</h1>')
-
 def get_category(request, category_id):
     news = News.objects.filter(category_id=category_id)
     categories = Category.objects.all()
