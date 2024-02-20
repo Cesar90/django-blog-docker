@@ -1,7 +1,24 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView
 from django.http import HttpResponse
 from .models import News, Category
 from .forms import NewsForm
+
+class HomeNews(ListView):
+    model = News
+    template_name = 'news/home_news_list.html'
+    context_object_name = 'news'
+    # extra_context = {'title':'Thi is my text'}
+
+    def get_context_data(self, *, object_list = None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'This is title from get_context_data'
+        return context
+    
+    def get_queryset(self):
+        return News.objects.filter(is_published=True)
 
 # Create your views here.
 def index(request):
