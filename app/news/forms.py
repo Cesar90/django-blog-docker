@@ -1,5 +1,7 @@
 from django import forms
 from .models import Category, News
+import re
+from django.core.exceptions import ValidationError
 
 # class NewsForm(forms.Form):
     # title = forms.CharField(max_length=150, label='Title news', widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -17,3 +19,9 @@ class NewsForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class':'form-control'}),
             'category': forms.Select(attrs={'class':'form-control'}),
         }
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if re.match('\d', title):
+            raise ValidationError("Title contains number")
+        return title
