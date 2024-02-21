@@ -1,7 +1,8 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from .models import News, Category
 from .forms import NewsForm
@@ -41,6 +42,10 @@ class ViewNews(DetailView):
     # template_name = 'news/news_detail.html'
     # pk_url_kwarg = 'news_id'
 
+class CreateNews(CreateView):
+    form_class = NewsForm
+    template_name = 'news/add_news.html'
+    success_url = reverse_lazy('home')
 
 # Create your views here.
 def index(request):
