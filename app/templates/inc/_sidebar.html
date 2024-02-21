@@ -4,6 +4,9 @@
     {% for item in categories %}
     <a href="{% url 'category' item.pk %}" class="list-group-item list-group-item-action" aria-current="true">
         {{ item.title }}
+        <span class="badge badge-primary badge-pill">
+            {{ item.cnt }}
+        </span>
     </a>
     {% endfor %}
 </div>
