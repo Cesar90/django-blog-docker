@@ -1,5 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse, reverse_lazy
@@ -7,8 +9,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .models import News, Category
-from .forms import NewsForm
+from .forms import NewsForm, UserRegisterForm
 from .utils import MyMixin
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'User created successfully')
+            return redirect('login')
+        else:
+            messages.error(request, 'Error to create user')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'news/register.html', {"form":form})
+
+def login(request):
+    return render(request, 'news/login.html')
 
 def test(request):
     objects = ['john1','paul2','george3','ringo4','john5','paul6','george7']
