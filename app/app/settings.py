@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'ckeditor',
+    'ckeditor_uploader',
     'news.apps.NewsConfig'
 ]
 
@@ -135,7 +137,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
+#Enable debug in docker
 if DEBUG:
     import socket  # only if you haven't already imported this
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2","172.22.0.3"]
+
+EMAIL_HOST = 'smtp.ukr.net'
+EMAIL_PORT = 465 #2525
+EMAIL_HOST_USER = 'yii2_loc@ukr.net'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True

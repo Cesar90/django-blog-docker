@@ -9,8 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.contrib.auth import login, logout
+from django.core.mail import send_mail
 from .models import News, Category
-from .forms import NewsForm, UserRegisterForm, UserLoginForm
+from .forms import NewsForm, UserRegisterForm, UserLoginForm, ContactForm
 from .utils import MyMixin
 
 def register(request):
@@ -41,6 +42,28 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            mail = send_mail(
+                form.cleaned_data['subject'],
+                form.cleaned_data['content'],
+                'yii2_loc@ukr.net',
+                ['cesarcoursehunter@gmail.com'],
+                fail_silently=False,
+            )
+            if mail:
+                messages.success(request, 'Contact send successfully')
+                return redirect('contact')
+            else:
+                messages.error(request, 'Faild send contact')
+            # messages.success(request,'Contact send')
+            # return redirect('contact')
+    else:
+        form = ContactForm()
+    return render(request, 'news/contact.html', {'form':form})
 
 def test(request):
     objects = ['john1','paul2','george3','ringo4','john5','paul6','george7']

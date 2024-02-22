@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from .models import Category, News
 import re
 
+class ContactForm(forms.Form):
+    subject = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control', "rows": 5}))
+
 # class NewsForm(forms.Form):
     # title = forms.CharField(max_length=150, label='Title news', widget=forms.TextInput(attrs={"class":"form-control"}))
     # content = forms.CharField(label="Conten news", required=False, widget=forms.Textarea(attrs={"class":"form-control","rows":5}))
