@@ -8,15 +8,17 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
+from django.contrib.auth import login, logout
 from .models import News, Category
-from .forms import NewsForm, UserRegisterForm
+from .forms import NewsForm, UserRegisterForm, UserLoginForm
 from .utils import MyMixin
 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             messages.success(request,'User created successfully')
             return redirect('login')
         else:
@@ -25,8 +27,20 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'news/register.html', {"form":form})
 
-def login(request):
-    return render(request, 'news/login.html')
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserLoginForm()
+    return render(request, 'news/login.html', {'form':form})
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
 
 def test(request):
     objects = ['john1','paul2','george3','ringo4','john5','paul6','george7']

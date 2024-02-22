@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Category, News
 import re
@@ -10,6 +10,11 @@ import re
     # content = forms.CharField(label="Conten news", required=False, widget=forms.Textarea(attrs={"class":"form-control","rows":5}))
     # is_published = forms.BooleanField(label="Is published?", initial=True)
     # category = forms.ModelChoiceField(empty_label="Select Category",queryset=Category.objects.all(), widget=forms.Select(attrs={"class":"form-control"}))
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    password = forms.CharField(label="Password",widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    
 
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
