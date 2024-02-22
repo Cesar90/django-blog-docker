@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Testing pagination :: {{ block.super }}
+{% endblock title %}
+
+{% block sidebar %}
+{% include "inc/_sidebar.html" %}
+{% endblock sidebar %}
+{% block content %}
+    {% for name in page_obj %}
+        <p>
+            {{name}}
+        </p>
+    {% endfor %}
+
+{% endblock content %}
