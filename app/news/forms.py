@@ -2,12 +2,14 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from captcha.fields import CaptchaField
 from .models import Category, News
 import re
 
 class ContactForm(forms.Form):
     subject = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     content = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control', "rows": 5}))
+    captcha = CaptchaField()
 
 # class NewsForm(forms.Form):
     # title = forms.CharField(max_length=150, label='Title news', widget=forms.TextInput(attrs={"class":"form-control"}))
