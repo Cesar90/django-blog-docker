@@ -11,11 +11,13 @@
             Home
           </a>
         </li>
+        {% if request.user.is_authenticated  %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'add_news' %}">
             Add new news
           </a>
         </li>
+        {% endif %}
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
